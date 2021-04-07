@@ -17,30 +17,36 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public Usuario CadastrarUsuario(Usuario usuario) {
+	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
+		
+		if (repository.findByUsuario(usuario.getUsuario()).isPresent()) {
+			return null;
+		}
+		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		String senhaCriptografada = encoder.encode(usuario.getSenha());
 		usuario.setSenha(senhaCriptografada);
 		
-		return repository.save(usuario);
+		return Optional.of(repository.save(usuario));
 	}
 	
-	public Optional<UsuarioLogin> Logar(Optional<UsuarioLogin> user) {
+	public Optional<UsuarioLogin> Logar(Optional<UsuarioLogin> usuarioLogin) {
+		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		Optional<Usuario> usuario = repository.findByUsuario(user.get().getUsuario());
+		Optional<Usuario> usuario = repository.findByUsuario(usuarioLogin.get().getUsuario());
 		
 		if(usuario.isPresent()) {
-			if(encoder.matches(user.get().getSenha(), usuario.get().getSenha())) {
+			if(encoder.matches(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
 				
-				String auth = user.get().getUsuario() + ":" + user.get().getSenha();
+				String auth = usuarioLogin.get().getUsuario() + ":" + usuarioLogin.get().getSenha();
 				byte[] encodeAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
 				String authHeader = "Basic " + new String(encodeAuth);
 				
-				user.get().setToken(authHeader);
-				user.get().setNome(usuario.get().getNome());
-				return user;
+				usuarioLogin.get().setToken(authHeader);
+				usuarioLogin.get().setNome(usuario.get().getNome());
+				return usuarioLogin;
 				
 			}
 		}
