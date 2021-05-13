@@ -19,7 +19,7 @@ public class UsuarioService {
 	
 	public Optional<Usuario> CadastrarUsuario(Usuario usuario) {
 		
-		if (repository.findByUsuario(usuario.getUsuario()).isPresent()) {
+		if (repository.findByUsuario(usuario.getUsuario()).isPresent() && usuario.getId() == 0) {
 			return null;
 		}
 		
