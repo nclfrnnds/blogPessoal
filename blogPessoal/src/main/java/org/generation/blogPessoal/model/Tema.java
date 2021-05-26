@@ -23,7 +23,7 @@ public class Tema {
 	private long id;
 	
 	@NotNull
-	@Size(min = 1, max = 100)
+	@Size(max = 100)
 	private String descricao;
 	
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
