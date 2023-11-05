@@ -1,15 +1,12 @@
 package org.generation.blogPessoal.model;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,12 +16,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_postagem")
-public class Postagem {
-	
-	@OneToMany(mappedBy = "postagem", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"postagem"})
-	private List<Comentario> comentario;
+@Table(name = "tb_comentario")
+public class Comentario {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data = new java.sql.Date(System.currentTimeMillis());
@@ -34,71 +27,51 @@ public class Postagem {
 	private long id;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
-	private Tema tema;
+	@JsonIgnoreProperties({"comentario","usuario"})
+	private Postagem postagem;
 	
 	@NotNull
-	@Size(max = 1000)
+	@Size(max = 500)
 	private String texto;
-
-	@NotNull
-	@Size(max = 200)
-	private String titulo;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
+	@JsonIgnoreProperties({"comentario","postagem"})
 	private Usuario usuario;
-	
-	public List<Comentario> getComentario() {
-		return comentario;
-	}
-	
+
 	public Date getData() {
 		return data;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
-	
-	public Tema getTema() {
-		return tema;
+
+	public Postagem getPostagem() {
+		return postagem;
 	}
-	
+
 	public String getTexto() {
 		return texto;
 	}
-	
-	public String getTitulo() {
-		return titulo;
-	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
-	public void setComentario(List<Comentario> comentario) {
-		this.comentario = comentario;
-	}
-	
+
 	public void setData(Date data) {
 		this.data = data;
 	}
-
+	
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public void setTema(Tema tema) {
-		this.tema = tema;
+	public void setPostagem(Postagem postagem) {
+		this.postagem = postagem;
 	}
 
 	public void setTexto(String texto) {
 		this.texto = texto;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
 	}
 
 	public void setUsuario(Usuario usuario) {

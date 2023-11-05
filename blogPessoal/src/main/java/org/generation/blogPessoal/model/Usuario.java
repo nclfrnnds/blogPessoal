@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "tb_usuario")
 public class Usuario {
 	
+	private String foto;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -26,76 +28,86 @@ public class Usuario {
 	@Size(min = 1, max = 100)
 	private String nome;
 	
-	@NotNull
-	@Size(min = 1, max = 100)
-	private String usuario;
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties({"usuario"})
+	private List<Postagem> postagem;
 	
 	@NotNull
 	@Size(min = 1, max = 100)
 	private String senha;
 	
-	private String foto;
-	
 	private String tipo;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("usuario")
-	private List<Postagem> postagem;
+	@NotNull
+	@Size(min = 1, max = 100)
+	private String usuario;
+	
+//	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+//	@JsonIgnoreProperties({"usuario", "postagem"})
+//	private List<Comentario> comentario;
+
+	public String getFoto() {
+		return foto;
+	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public List<Postagem> getPostagem() {
+		return postagem;
 	}
 
 	public String getSenha() {
 		return senha;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public String getFoto() {
-		return foto;
+	public String getUsuario() {
+		return usuario;
 	}
 
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setPostagem(List<Postagem> postagem) {
+		this.postagem = postagem;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
-	public List<Postagem> getPostagem() {
-		return postagem;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
-	public void setPostagem(List<Postagem> postagem) {
-		this.postagem = postagem;
-	}
+//	public List<Comentario> getComentario() {
+//		return comentario;
+//	}
+//
+//	public void setComentario(List<Comentario> comentario) {
+//		this.comentario = comentario;
+//	}
 
 }

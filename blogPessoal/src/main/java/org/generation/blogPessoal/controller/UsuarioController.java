@@ -26,10 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioService service;
+	private UsuarioRepository repository;
 	
 	@Autowired
-	private UsuarioRepository repository;
+	private UsuarioService service;
+	
+	@PostMapping("/login")
+	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {	
+		return service.login(usuarioLogin).map(response -> ResponseEntity.ok(response))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	}
+	
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable long id) {
+		repository.deleteById(id);
+	}
 	
 	@GetMapping
 	public ResponseEntity<List<Usuario>> getAll() {
@@ -54,20 +65,9 @@ public class UsuarioController {
 		}
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {	
-		return service.login(usuarioLogin).map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-	}
-	
 	@PutMapping
 	public ResponseEntity<Usuario> put(@RequestBody Usuario usuario) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(usuario));
-	}
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
 	}
 
 }

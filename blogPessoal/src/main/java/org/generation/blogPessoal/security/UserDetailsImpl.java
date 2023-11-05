@@ -11,18 +11,18 @@ public class UserDetailsImpl implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String username;
-	private String password;
 	private List<GrantedAuthority> authorities;
+	private String password;
+	private String username;
+	
+	public UserDetailsImpl() {
+		
+	}
 	
 	public UserDetailsImpl(Usuario user) {
 		super();
 		this.username = user.getUsuario();
 		this.password = user.getSenha();
-	}
-	
-	public UserDetailsImpl() {
-		
 	}
 
 	@Override

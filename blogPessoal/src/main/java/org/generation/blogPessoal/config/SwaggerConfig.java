@@ -17,14 +17,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 	
 	@Bean
-	public Docket docket() {
+	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 		.select()
-		.apis( RequestHandlerSelectors.basePackage
-		("org.generation.blogPessoal.controller") )
+		.apis(RequestHandlerSelectors.any())
 		.paths(PathSelectors.any())
-		.build()
-		.apiInfo(apiInfo());
+		.build();
 	}
 	
 	private ApiInfo apiInfo() {
@@ -38,8 +36,8 @@ public class SwaggerConfig {
 	
 	private Contact contact() {
 		return new Contact("Nicoli Fernandes",
-		"https://github.com/nclfrnnds",
-		"Desenvolvedora Web Full Stack Java");
+		"https://github.com/nic0li",
+		"Desenvolvedora Web Full Stack");
 	}
 
 }
