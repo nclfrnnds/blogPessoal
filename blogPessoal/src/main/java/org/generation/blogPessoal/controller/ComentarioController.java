@@ -1,9 +1,10 @@
 package org.generation.blogPessoal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.generation.blogPessoal.model.Comentario;
-import org.generation.blogPessoal.repository.ComentarioRepository;
+import org.generation.blogPessoal.service.ComentarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,33 +24,33 @@ import org.springframework.web.bind.annotation.RestController;
 public class ComentarioController {
 	
 	@Autowired
-	private ComentarioRepository repository;
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
-	}
+	private ComentarioService service;
 	
 	@GetMapping
 	public ResponseEntity<List<Comentario>> getAll() {
-		return ResponseEntity.ok(repository.findAll());
+		Optional<List<Comentario>> comentarios = service.getAll();
+		return ResponseEntity.ok(comentarios.get());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Comentario> getById(@PathVariable long id) {
-		return repository.findById(id)
+		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Comentario> post(@RequestBody Comentario comentario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(comentario));
+	public ResponseEntity<Optional<Comentario>> post(@RequestBody Comentario comentario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(comentario));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Comentario> put(@RequestBody Comentario comentario) {
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(comentario));
+	public ResponseEntity<Optional<Comentario>> put(@RequestBody Comentario comentario) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(comentario));
 	}
 
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable long id) {
+		service.delete(id);
+	}
 }

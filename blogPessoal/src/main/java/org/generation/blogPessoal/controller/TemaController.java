@@ -1,9 +1,10 @@
 package org.generation.blogPessoal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.generation.blogPessoal.model.Tema;
-import org.generation.blogPessoal.repository.TemaRepository;
+import org.generation.blogPessoal.service.TemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,38 +24,38 @@ import org.springframework.web.bind.annotation.RestController;
 public class TemaController {
 	
 	@Autowired
-	private TemaRepository repository;
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
-	}
+	private TemaService service;
 	
 	@GetMapping
 	public ResponseEntity<List<Tema>> getAll() {
-		return ResponseEntity.ok(repository.findAll());
-	}
-	
-	@GetMapping("/descricao/{descricao}")
-	public ResponseEntity<List<Tema>> getByDescricao(@PathVariable String descricao) {
-		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(descricao));
+		Optional<List<Tema>> temas = service.getAll();
+		return ResponseEntity.ok(temas.get());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Tema> getById(@PathVariable long id) {
-		return repository.findById(id)
+		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
+	@GetMapping("/descricao/{descricao}")
+	public ResponseEntity<Optional<List<Tema>>> getByDescricao(@PathVariable String descricao) {
+		return ResponseEntity.ok(service.getByTema(descricao));
+	}
+	
 	@PostMapping
-	public ResponseEntity<Tema> post(@RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(tema));
+	public ResponseEntity<Optional<Tema>> post(@RequestBody Tema tema) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(tema));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Tema> put(@RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(tema));
+	public ResponseEntity<Optional<Tema>> put(@RequestBody Tema tema) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(tema));
 	}
 
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable long id) {
+		service.delete(id);
+	}
 }

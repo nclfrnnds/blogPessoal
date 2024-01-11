@@ -1,9 +1,10 @@
 package org.generation.blogPessoal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.generation.blogPessoal.model.Postagem;
-import org.generation.blogPessoal.repository.PostagemRepository;
+import org.generation.blogPessoal.service.PostagemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,38 +24,38 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostagemController {
 	
 	@Autowired
-	private PostagemRepository repository;
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
-	}
+	private PostagemService service;
 	
 	@GetMapping
 	public ResponseEntity<List<Postagem>> getAll() {
-		return ResponseEntity.ok(repository.findAll());
+		Optional<List<Postagem>> postagens = service.getAll();
+		return ResponseEntity.ok(postagens.get());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Postagem> getById(@PathVariable long id) {
-		return repository.findById(id)
+		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<List<Postagem>> getByTitulo(@PathVariable String titulo) {
-		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
+	public ResponseEntity<Optional<List<Postagem>>> getByTitulo(@PathVariable String titulo) {
+		return ResponseEntity.ok(service.getByTitulo(titulo));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Postagem> post(@RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
+	public ResponseEntity<Optional<Postagem>> post(@RequestBody Postagem postagem) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(postagem));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Postagem> put(@RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
+	public ResponseEntity<Optional<Postagem>> put(@RequestBody Postagem postagem) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.post(postagem));
 	}
 
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable long id) {
+		service.delete(id);
+	}
 }

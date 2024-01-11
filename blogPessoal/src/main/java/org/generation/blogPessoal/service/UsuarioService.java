@@ -1,6 +1,7 @@
 package org.generation.blogPessoal.service;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.codec.binary.Base64;
@@ -10,6 +11,8 @@ import org.generation.blogPessoal.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UsuarioService {
@@ -58,4 +61,19 @@ public class UsuarioService {
 		return null;
 	}
 
+	public Optional<List<Usuario>> getAll() {
+		return Optional.of(repository.findAll());
+	}
+	
+	public Optional<Usuario> getById(@PathVariable long id) {
+		return repository.findById(id);
+	}
+	
+	public Optional<Usuario> put(@RequestBody Usuario usuario) {
+		return Optional.of(repository.save(usuario));
+	}
+
+	public void delete(@PathVariable long id) {
+		repository.deleteById(id);
+	}
 }

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.generation.blogPessoal.model.Usuario;
 import org.generation.blogPessoal.model.UsuarioLogin;
-import org.generation.blogPessoal.repository.UsuarioRepository;
 import org.generation.blogPessoal.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,33 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioRepository repository;
-	
-	@Autowired
 	private UsuarioService service;
-	
-	@PostMapping("/login")
-	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {	
-		return service.login(usuarioLogin).map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-	}
-	
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
-	}
-	
-	@GetMapping
-	public ResponseEntity<List<Usuario>> getAll() {
-		return ResponseEntity.ok(repository.findAll());
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable long id) {
-		return repository.findById(id)
-				.map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.notFound().build());
-	}
 	
 	@PostMapping("/cadastro")
 	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) {	
@@ -65,9 +38,32 @@ public class UsuarioController {
 		}
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {	
+		return service.login(usuarioLogin).map(response -> ResponseEntity.ok(response))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Usuario>> getAll() {
+		Optional<List<Usuario>> usuarios = service.getAll();
+		return ResponseEntity.ok(usuarios.get());
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Usuario> getById(@PathVariable long id) {
+		return service.getById(id)
+				.map(response -> ResponseEntity.ok(response))
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
 	@PutMapping
-	public ResponseEntity<Usuario> put(@RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.OK).body(repository.save(usuario));
+	public ResponseEntity<Optional<Usuario>> put(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(usuario));
 	}
 
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable long id) {
+		service.delete(id);
+	}
 }
