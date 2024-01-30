@@ -29,7 +29,7 @@ public class UsuarioController {
 	
 	@PostMapping("/cadastro")
 	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) {	
-		Optional<Usuario> user = service.cadastro(usuario);	
+		Optional<Usuario> user = service.cadastrarUsuario(usuario);	
 		try {
 			return ResponseEntity.ok(user.get());
 		} 
@@ -40,7 +40,7 @@ public class UsuarioController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {	
-		return service.login(usuarioLogin).map(response -> ResponseEntity.ok(response))
+		return service.autenticarUsuario(usuarioLogin).map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 	

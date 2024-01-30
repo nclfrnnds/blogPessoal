@@ -11,13 +11,11 @@ public class UserDetailsImpl implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private List<GrantedAuthority> authorities;
 	private String password;
 	private String username;
+	private List<GrantedAuthority> authorities;
 	
-	public UserDetailsImpl() {
-		
-	}
+	public UserDetailsImpl() { }
 	
 	public UserDetailsImpl(Usuario user) {
 		super();

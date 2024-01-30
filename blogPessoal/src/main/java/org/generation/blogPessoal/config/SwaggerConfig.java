@@ -3,41 +3,32 @@ package org.generation.blogPessoal.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 
-@EnableSwagger2
 @Configuration
 public class SwaggerConfig {
 	
 	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-		.select()
-		.apis(RequestHandlerSelectors.any())
-		.paths(PathSelectors.any())
-		.build();
-	}
-	
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder()
-		.title("Blog Pessoal")
-		.description("API do projeto de blog pessoal desenvolvido no curso da Generation Brasil.")
-		.version("1.0")
-		.contact(contact())
-		.build();
-	}
-	
-	private Contact contact() {
-		return new Contact("Nicoli Fernandes",
-		"https://github.com/nic0li",
-		"Desenvolvedora Web Full Stack");
+	public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                    .title("Blog Pessoal")
+                    .description("Projeto Blog Pessoal")
+                    .version("v0.0.1")
+                    .license(new License()
+                        .name("Nicoli Fernandes")
+                        .url("https://github.com/nic0li"))
+                    .contact(new Contact()
+                        .name("Nicoli Fernandes")
+                        .url("https://github.com/nic0li")
+                        .email("nicoli1992@gmail.com")))
+                .externalDocs(new ExternalDocumentation()
+                    .description("Github")
+                    .url("Nicoli Fernandes"));
 	}
 
 }
