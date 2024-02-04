@@ -40,10 +40,10 @@ public class Usuario {
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"usuario"})
-	private List<Postagem> postagem;
+	private List<Publicacao> publicacao;
 	
 //	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-//	@JsonIgnoreProperties({"usuario", "postagem"})
+//	@JsonIgnoreProperties({"usuario", "publicacao"})
 //	private List<Comentario> comentario;
 
 	public long getId() {
@@ -94,12 +94,12 @@ public class Usuario {
 		this.tipo = tipo;
 	}
 
-	public List<Postagem> getPostagem() {
-		return postagem;
+	public List<Publicacao> getPublicacao() {
+		return publicacao;
 	}
 
-	public void setPostagem(List<Postagem> postagem) {
-		this.postagem = postagem;
+	public void setPublicacao(List<Publicacao> publicacao) {
+		this.publicacao = publicacao;
 	}
 
 //	public List<Comentario> getComentario() {

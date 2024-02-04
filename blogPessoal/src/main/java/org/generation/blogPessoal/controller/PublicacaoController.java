@@ -3,8 +3,8 @@ package org.generation.blogPessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.generation.blogPessoal.model.Postagem;
-import org.generation.blogPessoal.service.PostagemService;
+import org.generation.blogPessoal.model.Publicacao;
+import org.generation.blogPessoal.service.PublicacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,39 +19,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/postagens")
+@RequestMapping("/publicacoes")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class PostagemController {
+public class PublicacaoController {
 	
 	@Autowired
-	private PostagemService service;
+	private PublicacaoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Postagem>> getAll() {
-		Optional<List<Postagem>> postagens = service.getAll();
-		return ResponseEntity.ok(postagens.get());
+	public ResponseEntity<List<Publicacao>> getAll() {
+		Optional<List<Publicacao>> publicacoes = service.getAll();
+		return ResponseEntity.ok(publicacoes.get());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Postagem> getById(@PathVariable long id) {
+	public ResponseEntity<Publicacao> getById(@PathVariable long id) {
 		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<Optional<List<Postagem>>> getByTitulo(@PathVariable String titulo) {
+	public ResponseEntity<Optional<List<Publicacao>>> getByTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(service.getByTitulo(titulo));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Optional<Postagem>> post(@RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(postagem));
+	public ResponseEntity<Optional<Publicacao>> post(@RequestBody Publicacao publicacao) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(publicacao));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<Postagem>> put(@RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.post(postagem));
+	public ResponseEntity<Optional<Publicacao>> put(@RequestBody Publicacao publicacao) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.post(publicacao));
 	}
 
 	@DeleteMapping("/{id}")

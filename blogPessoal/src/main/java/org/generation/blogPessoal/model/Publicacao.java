@@ -19,8 +19,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "tb_postagem")
-public class Postagem {
+@Table(name = "tb_publicacao")
+public class Publicacao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,15 +38,15 @@ public class Postagem {
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
+	@JsonIgnoreProperties("publicacao")
 	private Tema tema;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
+	@JsonIgnoreProperties("publicacao")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "postagem", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"postagem"})
+	@OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties({"publicacao"})
 	private List<Comentario> comentario;
 	
 	public long getId() {
