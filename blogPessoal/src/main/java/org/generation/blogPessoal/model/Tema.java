@@ -18,36 +18,36 @@ import jakarta.validation.constraints.Size;
 @Table(name = "tb_tema")
 public class Tema {
 	
-	@NotNull
-	@Size(max = 100)
-	private String descricao;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@NotNull
+	@Size(max = 100)
+	private String descricao;
 	
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("tema")
 	private List<Postagem> postagem;
 
-	public String getDescricao() {
-		return descricao;
-	}
-
 	public long getId() {
 		return id;
 	}
 
-	public List<Postagem> getPostagem() {
-		return postagem;
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public List<Postagem> getPostagem() {
+		return postagem;
 	}
 
 	public void setPostagem(List<Postagem> postagem) {
