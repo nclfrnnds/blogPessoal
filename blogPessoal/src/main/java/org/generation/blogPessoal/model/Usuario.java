@@ -28,7 +28,7 @@ public class Usuario {
 
 	@NotNull
 	@Size(min = 1, max = 100)
-	private String usuario;
+	private String nomeDeUsuario;
 
 	@NotNull
 	@Size(min = 1, max = 100)
@@ -62,12 +62,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getNomeDeUsuario() {
+		return nomeDeUsuario;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setNomeDeUsuario(String nomeDeUsuario) {
+		this.nomeDeUsuario = nomeDeUsuario;
 	}
 
 	public String getSenha() {

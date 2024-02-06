@@ -32,7 +32,7 @@ public class UsuarioService {
 	
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 		
-		if (repository.findByUsuario(usuario.getUsuario()).isPresent() && usuario.getId() == 0) {
+		if (repository.findByNomeDeUsuario(usuario.getNomeDeUsuario()).isPresent() && usuario.getId() == 0) {
 			return Optional.empty();
 		}
 		
@@ -47,20 +47,20 @@ public class UsuarioService {
 	}
 	
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
-		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha());
+		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getNomeDeUsuario(), usuarioLogin.get().getSenha());
 		
 		Authentication authentication = authenticationManager.authenticate(credenciais);
         
 		if (authentication.isAuthenticated()) {
 
-			Optional<Usuario> usuario = repository.findByUsuario(usuarioLogin.get().getUsuario());
+			Optional<Usuario> usuario = repository.findByNomeDeUsuario(usuarioLogin.get().getNomeDeUsuario());
 
 			if (usuario.isPresent()) {
 
 				usuarioLogin.get().setId(usuario.get().getId());
                 usuarioLogin.get().setNome(usuario.get().getNome());
                 usuarioLogin.get().setFoto(usuario.get().getFoto());
-                usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
+                usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getNomeDeUsuario()));
                 usuarioLogin.get().setSenha("");
                 usuarioLogin.get().setTipo(usuario.get().getTipo());
 								
@@ -78,7 +78,7 @@ public class UsuarioService {
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 		if(repository.findById(usuario.getId()).isPresent()) {
 
-			Optional<Usuario> buscaUsuario = repository.findByUsuario(usuario.getUsuario());
+			Optional<Usuario> buscaUsuario = repository.findByNomeDeUsuario(usuario.getNomeDeUsuario());
 
 			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
