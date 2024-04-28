@@ -1,5 +1,7 @@
 package org.generation.blogPessoal.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 public class TemaDTO {
@@ -7,7 +9,8 @@ public class TemaDTO {
 	private long id;
 	
 	private String descricao;
-	
+
+	@JsonIgnoreProperties("tema")
 	private List<PublicacaoDTO> publicacoes;
 
 	public TemaDTO() {
@@ -17,12 +20,18 @@ public class TemaDTO {
 		this.id = id;
 		this.descricao = descricao;
 	}
-	
+
 	public TemaDTO(long id, String descricao, List<PublicacaoDTO> publicacoes) {
 		this.id = id;
 		this.descricao = descricao;
 		this.publicacoes = publicacoes;
-	}	
+	}
+
+	public TemaDTO(TemaDTO temaDTO) {
+		this.id = temaDTO.id;
+		this.descricao = temaDTO.descricao;
+		this.publicacoes = temaDTO.publicacoes;
+	}
 
 	public long getId() {
 		return id;

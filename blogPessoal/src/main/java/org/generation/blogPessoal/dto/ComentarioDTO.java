@@ -1,5 +1,7 @@
 package org.generation.blogPessoal.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 public class ComentarioDTO {
@@ -10,19 +12,33 @@ public class ComentarioDTO {
 
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
+	@JsonIgnoreProperties({ "comentarios", "publicacoes" })
 	private UsuarioDTO usuario;
 
+	@JsonIgnoreProperties({ "comentarios", "usuario" })
 	private PublicacaoDTO publicacao;
 
 	public ComentarioDTO() {
 	}
 
-	public ComentarioDTO(long id, String texto, Date data, UsuarioDTO usuario, PublicacaoDTO publicacao) {
+	public ComentarioDTO(long id,
+						 String texto,
+						 Date data,
+						 UsuarioDTO usuario,
+						 PublicacaoDTO publicacao) {
 		this.id = id;
 		this.texto = texto;
 		this.data = data;
 		this.usuario = usuario;
 		this.publicacao = publicacao;
+	}
+
+	public ComentarioDTO(ComentarioDTO comentarioDTO) {
+		this.id = comentarioDTO.id;
+		this.texto = comentarioDTO.texto;
+		this.data = comentarioDTO.data;
+		this.usuario = comentarioDTO.usuario;
+		this.publicacao = comentarioDTO.publicacao;
 	}
 
 	public long getId() {

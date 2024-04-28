@@ -52,8 +52,12 @@ public class Publicacao {
 	public Publicacao() {
 	}
 
-	public Publicacao(long id, String titulo, String texto, Date data,
-										Tema tema, Usuario usuario) {
+	public Publicacao(long id,
+					  String titulo,
+					  String texto,
+					  Date data,
+					  Tema tema,
+					  Usuario usuario) {
 		this.id = id;
 		this.titulo = titulo;
 		this.texto = texto;
@@ -61,7 +65,33 @@ public class Publicacao {
 		this.tema = tema;
 		this.usuario = usuario;
 	}
-	
+
+	public Publicacao(long id,
+					  String titulo,
+					  String texto,
+					  Date data,
+					  Tema tema,
+					  Usuario usuario,
+					  List<Comentario> comentarios) {
+		this.id = id;
+		this.titulo = titulo;
+		this.texto = texto;
+		this.data = data;
+		this.tema = tema;
+		this.usuario = usuario;
+		this.comentarios = comentarios;
+	}
+
+	public Publicacao(Publicacao publicacao) {
+		this.id = publicacao.id;
+		this.titulo = publicacao.titulo;
+		this.texto = publicacao.texto;
+		this.data = publicacao.data;
+		this.tema = publicacao.tema;
+		this.usuario = publicacao.usuario;
+		this.comentarios = publicacao.comentarios;
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -49,14 +49,47 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(long id, String nome, String nomeDeUsuario, String senha,
-								 String foto, String tipo) {
+	public Usuario(long id,
+				   String nome,
+				   String nomeDeUsuario,
+				   String senha,
+				   String foto,
+				   String tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.nomeDeUsuario = nomeDeUsuario;
 		this.senha = senha;
 		this.foto = foto;
 		this.tipo = tipo;
+	}
+
+	public Usuario(long id,
+				   String nome,
+				   String nomeDeUsuario,
+				   String senha,
+				   String foto,
+				   String tipo,
+				   List<Publicacao> publicacoes,
+				   List<Comentario> comentarios) {
+		this.id = id;
+		this.nome = nome;
+		this.nomeDeUsuario = nomeDeUsuario;
+		this.senha = senha;
+		this.foto = foto;
+		this.tipo = tipo;
+		this.publicacoes = publicacoes;
+		this.comentarios = comentarios;
+	}
+
+	public Usuario (Usuario usuario) {
+		this.id = usuario.id;
+		this.nome = usuario.nome;
+		this.nomeDeUsuario = usuario.nomeDeUsuario;
+		this.senha = usuario.senha;
+		this.foto = usuario.foto;
+		this.tipo = usuario.tipo;
+		this.publicacoes = usuario.publicacoes;
+		this.comentarios = usuario.comentarios;
 	}
 
 	public long getId() {

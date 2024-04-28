@@ -41,12 +41,24 @@ public class Comentario {
 	public Comentario() {
 	}
 
-	public Comentario(long id, String texto, Date data, Usuario usuario, Publicacao publicacao) {
+	public Comentario(long id,
+					  String texto,
+					  Date data,
+					  Usuario usuario,
+					  Publicacao publicacao) {
 		this.id = id;
 		this.texto = texto;
 		this.data = data;
 		this.usuario = usuario;
 		this.publicacao = publicacao;
+	}
+
+	public Comentario(Comentario comentario) {
+		this.id = comentario.id;
+		this.texto = comentario.texto;
+		this.data = comentario.data;
+		this.usuario = comentario.usuario;
+		this.publicacao = comentario.publicacao;
 	}
 
 	public long getId() {

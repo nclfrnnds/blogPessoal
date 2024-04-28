@@ -37,11 +37,17 @@ public class Tema {
 		this.id = id;
 		this.descricao = descricao;
 	}
-	
+
 	public Tema(long id, String descricao, List<Publicacao> publicacoes) {
 		this.id = id;
 		this.descricao = descricao;
 		this.publicacoes = publicacoes;
+	}
+
+	public Tema(Tema tema) {
+		this.id = tema.id;
+		this.descricao = tema.descricao;
+		this.publicacoes = tema.publicacoes;
 	}
 
 	public long getId() {
