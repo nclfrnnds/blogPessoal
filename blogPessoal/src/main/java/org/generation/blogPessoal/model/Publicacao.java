@@ -38,16 +38,29 @@ public class Publicacao {
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
 	@ManyToOne
-	@JsonIgnoreProperties("publicacao")
+	@JsonIgnoreProperties("publicacoes")
 	private Tema tema;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("publicacao")
+	@JsonIgnoreProperties({"publicacoes", "comentarios"})
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"publicacao"})
-	private List<Comentario> comentario;
+	private List<Comentario> comentarios;
+
+	public Publicacao() {
+	}
+
+	public Publicacao(long id, String titulo, String texto, Date data,
+										Tema tema, Usuario usuario) {
+		this.id = id;
+		this.titulo = titulo;
+		this.texto = texto;
+		this.data = data;
+		this.tema = tema;
+		this.usuario = usuario;
+	}
 	
 	public long getId() {
 		return id;
@@ -97,12 +110,12 @@ public class Publicacao {
 		this.usuario = usuario;
 	}
 	
-	public List<Comentario> getComentario() {
-		return comentario;
+	public List<Comentario> getComentarios() {
+		return comentarios;
 	}
 	
-	public void setComentario(List<Comentario> comentario) {
-		this.comentario = comentario;
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 	
 }

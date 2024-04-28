@@ -28,7 +28,21 @@ public class Tema {
 	
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("tema")
-	private List<Publicacao> publicacao;
+	private List<Publicacao> publicacoes;
+
+	public Tema() {
+	}
+
+	public Tema(long id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
+	}
+	
+	public Tema(long id, String descricao, List<Publicacao> publicacoes) {
+		this.id = id;
+		this.descricao = descricao;
+		this.publicacoes = publicacoes;
+	}
 
 	public long getId() {
 		return id;
@@ -46,12 +60,12 @@ public class Tema {
 		this.descricao = descricao;
 	}
 
-	public List<Publicacao> getPublicacao() {
-		return publicacao;
+	public List<Publicacao> getPublicacoes() {
+		return publicacoes;
 	}
 
-	public void setPublicacao(List<Publicacao> publicacao) {
-		this.publicacao = publicacao;
+	public void setPublicacoes(List<Publicacao> publicacoes) {
+		this.publicacoes = publicacoes;
 	}
 
 }

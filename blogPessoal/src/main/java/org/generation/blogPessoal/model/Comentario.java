@@ -31,12 +31,23 @@ public class Comentario {
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
 	@ManyToOne
-	@JsonIgnoreProperties({ "comentario", "publicacao" })
+	@JsonIgnoreProperties({ "comentarios", "publicacoes" })
 	private Usuario usuario;
 
 	@ManyToOne
-	@JsonIgnoreProperties({ "comentario", "usuario" })
+	@JsonIgnoreProperties({ "comentarios", "usuario" })
 	private Publicacao publicacao;
+
+	public Comentario() {
+	}
+
+	public Comentario(long id, String texto, Date data, Usuario usuario, Publicacao publicacao) {
+		this.id = id;
+		this.texto = texto;
+		this.data = data;
+		this.usuario = usuario;
+		this.publicacao = publicacao;
+	}
 
 	public long getId() {
 		return id;

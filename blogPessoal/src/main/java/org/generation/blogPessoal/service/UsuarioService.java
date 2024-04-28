@@ -2,7 +2,10 @@ package org.generation.blogPessoal.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.generation.blogPessoal.dto.UsuarioDTO;
+import org.generation.blogPessoal.mapper.UsuarioMapper;
 import org.generation.blogPessoal.model.Usuario;
 import org.generation.blogPessoal.model.UsuarioLogin;
 import org.generation.blogPessoal.repository.UsuarioRepository;
@@ -25,12 +28,12 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 	
 	@Autowired
-    private JwtService jwtService;
+	private JwtService jwtService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
-	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
+	public Optional<UsuarioDTO> cadastrarUsuario(Usuario usuario) {
 		
 		if (repository.findByNomeDeUsuario(usuario.getNomeDeUsuario()).isPresent() && usuario.getId() == 0) {
 			return Optional.empty();
@@ -38,7 +41,7 @@ public class UsuarioService {
 		
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
 		
-		return Optional.of(repository.save(usuario));
+		return Optional.of(UsuarioMapper.toDTO(repository.save(usuario)));
 	}
 	
 	private String criptografarSenha(String senha) {
@@ -75,7 +78,7 @@ public class UsuarioService {
 		return "Bearer " + jwtService.generateToken(usuario);
 	}
 	
-	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
+	public Optional<UsuarioDTO> atualizarUsuario(Usuario usuario) {
 		if(repository.findById(usuario.getId()).isPresent()) {
 
 			Optional<Usuario> buscaUsuario = repository.findByNomeDeUsuario(usuario.getNomeDeUsuario());
@@ -85,22 +88,24 @@ public class UsuarioService {
 
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
-			return Optional.ofNullable(repository.save(usuario));
+			return Optional.ofNullable(UsuarioMapper.toDTO(repository.save(usuario)));
 			
 		}
 		return Optional.empty();
 	}
 
-	public Optional<List<Usuario>> getAll() {
-		return Optional.of(repository.findAll());
+	public Optional<List<UsuarioDTO>> getAll() {
+		List<Usuario> usuarios = repository.findAll();
+		return Optional.of(usuarios.stream().map(UsuarioMapper::toDTO).collect(Collectors.toList()));
 	}
 	
-	public Optional<Usuario> getById(@PathVariable long id) {
-		return repository.findById(id);
+	public Optional<UsuarioDTO> getById(@PathVariable long id) {
+		Optional<Usuario> usuario = repository.findById(id);
+		return usuario.map(UsuarioMapper::toDTO);
 	}
 	
-	public Optional<Usuario> put(@RequestBody Usuario usuario) {
-		return Optional.of(repository.save(usuario));
+	public Optional<UsuarioDTO> put(@RequestBody Usuario usuario) {
+		return Optional.of(UsuarioMapper.toDTO(repository.save(usuario)));
 	}
 
 	public void delete(@PathVariable long id) {

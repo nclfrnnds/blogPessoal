@@ -2,7 +2,10 @@ package org.generation.blogPessoal.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.generation.blogPessoal.dto.ComentarioDTO;
+import org.generation.blogPessoal.mapper.ComentarioMapper;
 import org.generation.blogPessoal.model.Comentario;
 import org.generation.blogPessoal.repository.ComentarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +19,22 @@ public class ComentarioService {
 	@Autowired
 	private ComentarioRepository repository;
 
-	public Optional<List<Comentario>> getAll() {
-		return Optional.of(repository.findAll());
+	public Optional<List<ComentarioDTO>> getAll() {
+		List<Comentario> comentarios = repository.findAll();
+		return Optional.of(comentarios.stream().map(ComentarioMapper::toDTO).collect(Collectors.toList()));
 	}
 	
-	public Optional<Comentario> getById(@PathVariable long id) {
-		return repository.findById(id);
+	public Optional<ComentarioDTO> getById(@PathVariable long id) {
+		Optional<Comentario> comentario = repository.findById(id);
+		return comentario.map(ComentarioMapper::toDTO);
 	}
 	
-	public Optional<Comentario> post(@RequestBody Comentario comentario) {
-		return Optional.of(repository.save(comentario));
+	public Optional<ComentarioDTO> post(@RequestBody Comentario comentario) {
+		return Optional.of(ComentarioMapper.toDTO(repository.save(comentario)));
 	}
 	
-	public Optional<Comentario> put(@RequestBody Comentario comentario) {
-		return Optional.of(repository.save(comentario));
+	public Optional<ComentarioDTO> put(@RequestBody Comentario comentario) {
+		return Optional.of(ComentarioMapper.toDTO(repository.save(comentario)));
 	}
 
 	public void delete(@PathVariable long id) {

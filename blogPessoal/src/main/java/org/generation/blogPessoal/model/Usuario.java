@@ -39,12 +39,25 @@ public class Usuario {
 	private String tipo;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"usuario"})
-	private List<Publicacao> publicacao;
+	@JsonIgnoreProperties({"usuario", "comentarios"})
+	private List<Publicacao> publicacoes;
 	
-//	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-//	@JsonIgnoreProperties({"usuario", "publicacao"})
-//	private List<Comentario> comentario;
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties({"usuario", "publicacao"})
+	private List<Comentario> comentarios;
+
+	public Usuario() {
+	}
+
+	public Usuario(long id, String nome, String nomeDeUsuario, String senha,
+								 String foto, String tipo) {
+		this.id = id;
+		this.nome = nome;
+		this.nomeDeUsuario = nomeDeUsuario;
+		this.senha = senha;
+		this.foto = foto;
+		this.tipo = tipo;
+	}
 
 	public long getId() {
 		return id;
@@ -94,20 +107,20 @@ public class Usuario {
 		this.tipo = tipo;
 	}
 
-	public List<Publicacao> getPublicacao() {
-		return publicacao;
+	public List<Publicacao> getPublicacoes() {
+		return publicacoes;
 	}
 
-	public void setPublicacao(List<Publicacao> publicacao) {
-		this.publicacao = publicacao;
+	public void setPublicacoes(List<Publicacao> publicacoes) {
+		this.publicacoes = publicacoes;
 	}
 
-//	public List<Comentario> getComentario() {
-//		return comentario;
-//	}
-//
-//	public void setComentario(List<Comentario> comentario) {
-//		this.comentario = comentario;
-//	}
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
 
 }

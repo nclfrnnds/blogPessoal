@@ -3,6 +3,7 @@ package org.generation.blogPessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.generation.blogPessoal.dto.PublicacaoDTO;
 import org.generation.blogPessoal.model.Publicacao;
 import org.generation.blogPessoal.service.PublicacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,30 +28,30 @@ public class PublicacaoController {
 	private PublicacaoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Publicacao>> getAll() {
-		Optional<List<Publicacao>> publicacoes = service.getAll();
+	public ResponseEntity<List<PublicacaoDTO>> getAll() {
+		Optional<List<PublicacaoDTO>> publicacoes = service.getAll();
 		return ResponseEntity.ok(publicacoes.get());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Publicacao> getById(@PathVariable long id) {
+	public ResponseEntity<PublicacaoDTO> getById(@PathVariable long id) {
 		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<Optional<List<Publicacao>>> getByTitulo(@PathVariable String titulo) {
+	public ResponseEntity<Optional<List<PublicacaoDTO>>> getByTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(service.getByTitulo(titulo));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Optional<Publicacao>> post(@RequestBody Publicacao publicacao) {
+	public ResponseEntity<Optional<PublicacaoDTO>> post(@RequestBody Publicacao publicacao) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(publicacao));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<Publicacao>> put(@RequestBody Publicacao publicacao) {
+	public ResponseEntity<Optional<PublicacaoDTO>> put(@RequestBody Publicacao publicacao) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.post(publicacao));
 	}
 

@@ -3,6 +3,7 @@ package org.generation.blogPessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.generation.blogPessoal.dto.UsuarioDTO;
 import org.generation.blogPessoal.model.Usuario;
 import org.generation.blogPessoal.model.UsuarioLogin;
 import org.generation.blogPessoal.service.UsuarioService;
@@ -28,8 +29,8 @@ public class UsuarioController {
 	private UsuarioService service;
 	
 	@PostMapping("/cadastro")
-	public ResponseEntity<Usuario> post(@RequestBody Usuario usuario) {	
-		Optional<Usuario> user = service.cadastrarUsuario(usuario);	
+	public ResponseEntity<UsuarioDTO> post(@RequestBody Usuario usuario) {
+		Optional<UsuarioDTO> user = service.cadastrarUsuario(usuario);
 		try {
 			return ResponseEntity.ok(user.get());
 		} 
@@ -45,20 +46,20 @@ public class UsuarioController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> getAll() {
-		Optional<List<Usuario>> usuarios = service.getAll();
+	public ResponseEntity<List<UsuarioDTO>> getAll() {
+		Optional<List<UsuarioDTO>> usuarios = service.getAll();
 		return ResponseEntity.ok(usuarios.get());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getById(@PathVariable long id) {
+	public ResponseEntity<UsuarioDTO> getById(@PathVariable long id) {
 		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<Usuario>> put(@RequestBody Usuario usuario) {
+	public ResponseEntity<Optional<UsuarioDTO>> put(@RequestBody Usuario usuario) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.put(usuario));
 	}
 

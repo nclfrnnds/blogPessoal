@@ -3,6 +3,7 @@ package org.generation.blogPessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.generation.blogPessoal.dto.ComentarioDTO;
 import org.generation.blogPessoal.model.Comentario;
 import org.generation.blogPessoal.service.ComentarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +28,25 @@ public class ComentarioController {
 	private ComentarioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Comentario>> getAll() {
-		Optional<List<Comentario>> comentarios = service.getAll();
+	public ResponseEntity<List<ComentarioDTO>> getAll() {
+		Optional<List<ComentarioDTO>> comentarios = service.getAll();
 		return ResponseEntity.ok(comentarios.get());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Comentario> getById(@PathVariable long id) {
+	public ResponseEntity<ComentarioDTO> getById(@PathVariable long id) {
 		return service.getById(id)
 				.map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Optional<Comentario>> post(@RequestBody Comentario comentario) {
+	public ResponseEntity<Optional<ComentarioDTO>> post(@RequestBody Comentario comentario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(comentario));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<Comentario>> put(@RequestBody Comentario comentario) {
+	public ResponseEntity<Optional<ComentarioDTO>> put(@RequestBody Comentario comentario) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.put(comentario));
 	}
 

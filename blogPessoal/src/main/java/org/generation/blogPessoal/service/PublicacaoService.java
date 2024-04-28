@@ -2,7 +2,10 @@ package org.generation.blogPessoal.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.generation.blogPessoal.dto.PublicacaoDTO;
+import org.generation.blogPessoal.mapper.PublicacaoMapper;
 import org.generation.blogPessoal.model.Publicacao;
 import org.generation.blogPessoal.repository.PublicacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +19,27 @@ public class PublicacaoService {
 	@Autowired
 	private PublicacaoRepository repository;
 
-	public Optional<List<Publicacao>> getAll() {
-		return Optional.of(repository.findAll());
+	public Optional<List<PublicacaoDTO>> getAll() {
+		List<Publicacao> publicacoes = repository.findAll();
+		return Optional.of(publicacoes.stream().map(PublicacaoMapper::toDTO).collect(Collectors.toList()));
 	}
 	
-	public Optional<Publicacao> getById(@PathVariable long id) {
-		return repository.findById(id);
+	public Optional<PublicacaoDTO> getById(@PathVariable long id) {
+		Optional<Publicacao> publicacao = repository.findById(id);
+		return publicacao.map(PublicacaoMapper::toDTO);
 	}
 	
-	public Optional<List<Publicacao>> getByTitulo(@PathVariable String titulo) {
-		return Optional.of(repository.findAllByTituloContainingIgnoreCase(titulo));
+	public Optional<List<PublicacaoDTO>> getByTitulo(@PathVariable String titulo) {
+		List<Publicacao> publicacoes = repository.findAllByTituloContainingIgnoreCase(titulo);
+		return Optional.of(publicacoes.stream().map(PublicacaoMapper::toDTO).collect(Collectors.toList()));
 	}
 	
-	public Optional<Publicacao> post(@RequestBody Publicacao publicacao) {
-		return Optional.of(repository.save(publicacao));
+	public Optional<PublicacaoDTO> post(@RequestBody Publicacao publicacao) {
+		return Optional.of(PublicacaoMapper.toDTO(repository.save(publicacao)));
 	}
 	
-	public Optional<Publicacao> put(@RequestBody Publicacao publicacao) {
-		return Optional.of(repository.save(publicacao));
+	public Optional<PublicacaoDTO> put(@RequestBody Publicacao publicacao) {
+		return Optional.of(PublicacaoMapper.toDTO(repository.save(publicacao)));
 	}
 
 	public void delete(@PathVariable long id) {
