@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Getter
 @Setter
 public class UsuarioDTO {
@@ -21,8 +23,10 @@ public class UsuarioDTO {
 
 	private String tipo;
 
+	@JsonIgnoreProperties({"usuario", "comentarios"})
 	private List<PublicacaoDTO> publicacoes;
 
+	@JsonIgnoreProperties({"usuario", "publicacao"})
 	private List<ComentarioDTO> comentarios;
 
 	public UsuarioDTO(long id,

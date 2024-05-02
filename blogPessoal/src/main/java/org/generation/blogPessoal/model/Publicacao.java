@@ -42,15 +42,12 @@ public class Publicacao {
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
 	@ManyToOne
-	@JsonIgnoreProperties("publicacoes")
 	private Tema tema;
 
 	@ManyToOne
-	@JsonIgnoreProperties({"publicacoes", "comentarios"})
 	private Usuario usuario;
 
 	@OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"publicacao"})
 	private List<Comentario> comentarios;
 
 }

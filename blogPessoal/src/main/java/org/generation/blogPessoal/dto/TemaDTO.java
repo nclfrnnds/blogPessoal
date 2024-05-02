@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Getter
 @Setter
 public class TemaDTO {
@@ -13,6 +15,7 @@ public class TemaDTO {
 	
 	private String descricao;
 
+	@JsonIgnoreProperties("tema")
 	private List<PublicacaoDTO> publicacoes;
 
 	public TemaDTO(long id, String descricao) {

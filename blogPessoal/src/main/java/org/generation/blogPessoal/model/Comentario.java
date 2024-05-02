@@ -35,11 +35,9 @@ public class Comentario {
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
 	@ManyToOne
-	@JsonIgnoreProperties({ "comentarios", "publicacoes" })
 	private Usuario usuario;
 
 	@ManyToOne
-	@JsonIgnoreProperties({ "comentarios", "usuario" })
 	private Publicacao publicacao;
 
 }

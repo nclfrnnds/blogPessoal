@@ -43,11 +43,9 @@ public class Usuario {
 	private String tipo;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"usuario", "comentarios"})
 	private List<Publicacao> publicacoes;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties({"usuario", "publicacao"})
 	private List<Comentario> comentarios;
 
 }

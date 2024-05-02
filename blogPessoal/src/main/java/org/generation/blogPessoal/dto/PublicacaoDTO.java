@@ -6,6 +6,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Getter
 @Setter
 public class PublicacaoDTO {
@@ -18,10 +20,13 @@ public class PublicacaoDTO {
 	
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
+	@JsonIgnoreProperties("publicacoes")
 	private TemaDTO tema;
 
+	@JsonIgnoreProperties({"publicacoes", "comentarios"})
 	private UsuarioDTO usuario;
 
+	@JsonIgnoreProperties({"publicacao"})
 	private List<ComentarioDTO> comentarios;
 
 	public PublicacaoDTO(long id,
