@@ -13,7 +13,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
@@ -41,7 +45,7 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"usuario", "comentarios"})
 	private List<Publicacao> publicacoes;
-	
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"usuario", "publicacao"})
 	private List<Comentario> comentarios;
@@ -90,70 +94,6 @@ public class Usuario {
 		this.tipo = usuario.tipo;
 		this.publicacoes = usuario.publicacoes;
 		this.comentarios = usuario.comentarios;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getNomeDeUsuario() {
-		return nomeDeUsuario;
-	}
-
-	public void setNomeDeUsuario(String nomeDeUsuario) {
-		this.nomeDeUsuario = nomeDeUsuario;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public List<Publicacao> getPublicacoes() {
-		return publicacoes;
-	}
-
-	public void setPublicacoes(List<Publicacao> publicacoes) {
-		this.publicacoes = publicacoes;
-	}
-
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
 	}
 
 }

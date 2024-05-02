@@ -1,9 +1,12 @@
 package org.generation.blogPessoal.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UsuarioDTO {
 	
 	private long id;
@@ -18,14 +21,9 @@ public class UsuarioDTO {
 
 	private String tipo;
 
-	@JsonIgnoreProperties({"usuario", "comentarios"})
 	private List<PublicacaoDTO> publicacoes;
 
-	@JsonIgnoreProperties({"usuario", "publicacao"})
 	private List<ComentarioDTO> comentarios;
-
-	public UsuarioDTO() {
-	}
 
 	public UsuarioDTO(long id,
 					  String nome,
@@ -68,70 +66,6 @@ public class UsuarioDTO {
 		this.tipo = usuarioDTO.tipo;
 		this.publicacoes = usuarioDTO.publicacoes;
 		this.comentarios = usuarioDTO.comentarios;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getNomeDeUsuario() {
-		return nomeDeUsuario;
-	}
-
-	public void setNomeDeUsuario(String nomeDeUsuario) {
-		this.nomeDeUsuario = nomeDeUsuario;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public List<PublicacaoDTO> getPublicacoes() {
-		return publicacoes;
-	}
-
-	public void setPublicacoes(List<PublicacaoDTO> publicacoes) {
-		this.publicacoes = publicacoes;
-	}
-
-	public List<ComentarioDTO> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<ComentarioDTO> comentarios) {
-		this.comentarios = comentarios;
 	}
 
 }

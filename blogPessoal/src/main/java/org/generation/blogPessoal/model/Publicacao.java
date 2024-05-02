@@ -17,7 +17,11 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_publicacao")
 public class Publicacao {
@@ -40,11 +44,11 @@ public class Publicacao {
 	@ManyToOne
 	@JsonIgnoreProperties("publicacoes")
 	private Tema tema;
-	
+
 	@ManyToOne
 	@JsonIgnoreProperties({"publicacoes", "comentarios"})
 	private Usuario usuario;
-	
+
 	@OneToMany(mappedBy = "publicacao", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"publicacao"})
 	private List<Comentario> comentarios;
@@ -92,60 +96,4 @@ public class Publicacao {
 		this.comentarios = publicacao.comentarios;
 	}
 
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public String getTitulo() {
-		return titulo;
-	}
-	
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-	
-	public String getTexto() {
-		return texto;
-	}
-	
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-	
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public Tema getTema() {
-		return tema;
-	}
-	
-	public void setTema(Tema tema) {
-		this.tema = tema;
-	}
-	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-	
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
-	
 }

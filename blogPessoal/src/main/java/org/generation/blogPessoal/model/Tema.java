@@ -13,7 +13,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_tema")
 public class Tema {
@@ -25,7 +29,7 @@ public class Tema {
 	@NotNull
 	@Size(max = 100)
 	private String descricao;
-	
+
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("tema")
 	private List<Publicacao> publicacoes;
@@ -48,30 +52,6 @@ public class Tema {
 		this.id = tema.id;
 		this.descricao = tema.descricao;
 		this.publicacoes = tema.publicacoes;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public List<Publicacao> getPublicacoes() {
-		return publicacoes;
-	}
-
-	public void setPublicacoes(List<Publicacao> publicacoes) {
-		this.publicacoes = publicacoes;
 	}
 
 }

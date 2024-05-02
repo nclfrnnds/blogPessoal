@@ -14,7 +14,11 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_comentario")
 public class Comentario {
@@ -59,46 +63,6 @@ public class Comentario {
 		this.data = comentario.data;
 		this.usuario = comentario.usuario;
 		this.publicacao = comentario.publicacao;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getTexto() {
-		return texto;
-	}
-
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Publicacao getPublicacao() {
-		return publicacao;
-	}
-
-	public void setPublicacao(Publicacao publicacao) {
-		this.publicacao = publicacao;
 	}
 
 }
