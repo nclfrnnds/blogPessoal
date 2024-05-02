@@ -31,12 +31,4 @@ public class ComentarioDTO {
 		this.publicacao = publicacao;
 	}
 
-	public ComentarioDTO(ComentarioDTO comentarioDTO) {
-		this.id = comentarioDTO.id;
-		this.texto = comentarioDTO.texto;
-		this.data = comentarioDTO.data;
-		this.usuario = comentarioDTO.usuario;
-		this.publicacao = comentarioDTO.publicacao;
-	}
-
 }

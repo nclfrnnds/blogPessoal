@@ -26,10 +26,4 @@ public class TemaDTO {
 		this.publicacoes = publicacoes;
 	}
 
-	public TemaDTO(TemaDTO temaDTO) {
-		this.id = temaDTO.id;
-		this.descricao = temaDTO.descricao;
-		this.publicacoes = temaDTO.publicacoes;
-	}
-
 }

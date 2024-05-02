@@ -54,14 +54,4 @@ public class PublicacaoDTO {
 		this.comentarios = comentarios;
 	}
 
-	public PublicacaoDTO(PublicacaoDTO publicacaoDTO) {
-		this.id = publicacaoDTO.id;
-		this.titulo = publicacaoDTO.titulo;
-		this.texto = publicacaoDTO.texto;
-		this.data = publicacaoDTO.data;
-		this.tema = publicacaoDTO.tema;
-		this.usuario = publicacaoDTO.usuario;
-		this.comentarios = publicacaoDTO.comentarios;
-	}
-
 }

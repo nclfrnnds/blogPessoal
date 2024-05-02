@@ -57,15 +57,4 @@ public class UsuarioDTO {
 		this.comentarios = comentarios;
 	}
 
-	public UsuarioDTO(UsuarioDTO usuarioDTO) {
-		this.id = usuarioDTO.id;
-		this.nome = usuarioDTO.nome;
-		this.nomeDeUsuario = usuarioDTO.nomeDeUsuario;
-		this.senha = usuarioDTO.senha;
-		this.foto = usuarioDTO.foto;
-		this.tipo = usuarioDTO.tipo;
-		this.publicacoes = usuarioDTO.publicacoes;
-		this.comentarios = usuarioDTO.comentarios;
-	}
-
 }
