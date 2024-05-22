@@ -52,7 +52,7 @@ public class PublicacaoController {
 	
 	@PutMapping
 	public ResponseEntity<Optional<PublicacaoDTO>> put(@RequestBody Publicacao publicacao) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.post(publicacao));
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(publicacao));
 	}
 
 	@DeleteMapping("/{id}")

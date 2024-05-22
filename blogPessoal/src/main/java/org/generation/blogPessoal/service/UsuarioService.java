@@ -101,7 +101,7 @@ public class UsuarioService {
 	
 	public Optional<UsuarioDTO> getById(@PathVariable long id) {
 		Optional<Usuario> usuario = repository.findById(id);
-		return usuario.map(UsuarioMapper::toDTO);
+		return Optional.of(UsuarioMapper.toDTO(usuario.get()));
 	}
 	
 	public Optional<UsuarioDTO> put(@RequestBody Usuario usuario) {

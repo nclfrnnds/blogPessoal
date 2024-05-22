@@ -26,7 +26,7 @@ public class TemaService {
 	
 	public Optional<TemaDTO> getById(@PathVariable long id) {
 		Optional<Tema> tema = repository.findById(id);
-		return tema.map(TemaMapper::toDTO);
+		return Optional.of(TemaMapper.toDTO(tema.get()));
 	}
 	
 	public Optional<List<TemaDTO>> getByTema(@PathVariable String tema) {

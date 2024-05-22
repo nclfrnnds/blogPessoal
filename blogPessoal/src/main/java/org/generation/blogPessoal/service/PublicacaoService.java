@@ -26,7 +26,7 @@ public class PublicacaoService {
 	
 	public Optional<PublicacaoDTO> getById(@PathVariable long id) {
 		Optional<Publicacao> publicacao = repository.findById(id);
-		return publicacao.map(PublicacaoMapper::toDTO);
+		return Optional.of(PublicacaoMapper.toDTO(publicacao.get()));
 	}
 	
 	public Optional<List<PublicacaoDTO>> getByTitulo(@PathVariable String titulo) {

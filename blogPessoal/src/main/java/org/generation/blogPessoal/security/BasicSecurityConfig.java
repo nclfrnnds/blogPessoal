@@ -28,7 +28,6 @@ public class BasicSecurityConfig {
 
     @Bean
     UserDetailsService userDetailsService() {
-
         return new UserDetailsServiceImpl();
     }
 
@@ -62,20 +61,20 @@ public class BasicSecurityConfig {
 
     	http
 	        .authorizeHttpRequests((auth) -> auth
-	                .requestMatchers("/usuarios/login").permitAll()
-	                .requestMatchers("/usuarios/cadastro").permitAll()
-	                .requestMatchers("/usuarios").permitAll()
-	                .requestMatchers("/usuarios/{id}").permitAll()
-	        		.requestMatchers("/temas").permitAll()
-	                .requestMatchers("/temas/{id}").permitAll()
-	                .requestMatchers("/publicacoes").permitAll()
-	                .requestMatchers("/publicacoes/{id}").permitAll()
-	                .requestMatchers("/comentarios").permitAll()
-	                .requestMatchers("/comentarios/{id}").permitAll()
-	                .requestMatchers("/error/**").permitAll()
-	        		.requestMatchers("/**").permitAll()
-	                .requestMatchers(HttpMethod.OPTIONS).permitAll()
-	                .anyRequest().authenticated())
+							.requestMatchers("/usuarios/login").permitAll()
+							.requestMatchers("/usuarios/cadastro").permitAll()
+							.requestMatchers("/usuarios").permitAll()
+							.requestMatchers("/usuarios/{id}").permitAll()
+							.requestMatchers("/temas").permitAll()
+							.requestMatchers("/temas/{id}").permitAll()
+							.requestMatchers("/publicacoes").permitAll()
+							.requestMatchers("/publicacoes/{id}").permitAll()
+							.requestMatchers("/comentarios").permitAll()
+							.requestMatchers("/comentarios/{id}").permitAll()
+							.requestMatchers("/error/**").permitAll()
+							.requestMatchers("/**").permitAll()
+							.requestMatchers(HttpMethod.OPTIONS).permitAll()
+							.anyRequest().authenticated())
 	        .authenticationProvider(authenticationProvider())
 	        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
 	        .httpBasic(withDefaults());

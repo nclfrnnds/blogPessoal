@@ -26,7 +26,7 @@ public class ComentarioService {
 	
 	public Optional<ComentarioDTO> getById(@PathVariable long id) {
 		Optional<Comentario> comentario = repository.findById(id);
-		return comentario.map(ComentarioMapper::toDTO);
+		return Optional.of(ComentarioMapper.toDTO(comentario.get()));
 	}
 	
 	public Optional<ComentarioDTO> post(@RequestBody Comentario comentario) {
