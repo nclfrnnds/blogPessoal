@@ -3,13 +3,13 @@ package org.generation.blogPessoal.dto;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class PublicacaoDTO {
 	
 	private long id;
@@ -41,22 +41,6 @@ public class PublicacaoDTO {
 		this.data = data;
 		this.tema = tema;
 		this.usuario = usuario;
-	}
-
-	public PublicacaoDTO(long id,
-						 String titulo,
-						 String texto,
-						 Date data,
-						 TemaDTO tema,
-						 UsuarioDTO usuario,
-						 List<ComentarioDTO> comentarios) {
-		this.id = id;
-		this.titulo = titulo;
-		this.texto = texto;
-		this.data = data;
-		this.tema = tema;
-		this.usuario = usuario;
-		this.comentarios = comentarios;
 	}
 
 }

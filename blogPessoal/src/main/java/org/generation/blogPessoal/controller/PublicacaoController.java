@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.generation.blogPessoal.dto.PublicacaoDTO;
-import org.generation.blogPessoal.model.Publicacao;
 import org.generation.blogPessoal.service.PublicacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +27,13 @@ public class PublicacaoController {
 	private PublicacaoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<PublicacaoDTO>> getAll() {
-		Optional<List<PublicacaoDTO>> publicacoes = service.getAll();
-		return ResponseEntity.ok(publicacoes.get());
+	public ResponseEntity<Optional<List<PublicacaoDTO>>> getAll() {
+		return ResponseEntity.ok(service.getAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PublicacaoDTO> getById(@PathVariable long id) {
-		return service.getById(id)
-				.map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<Optional<PublicacaoDTO>> getById(@PathVariable long id) {
+		return ResponseEntity.ok(service.getById(id));
 	}
 	
 	@GetMapping("/titulo/{titulo}")
@@ -46,17 +42,19 @@ public class PublicacaoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Optional<PublicacaoDTO>> post(@RequestBody Publicacao publicacao) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(publicacao));
+	public ResponseEntity<Optional<PublicacaoDTO>> post(@RequestBody PublicacaoDTO dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<PublicacaoDTO>> put(@RequestBody Publicacao publicacao) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.put(publicacao));
+	public ResponseEntity<Optional<PublicacaoDTO>> put(@RequestBody PublicacaoDTO dto) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(dto));
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
+	public ResponseEntity delete(@PathVariable long id) {
 		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
+
 }

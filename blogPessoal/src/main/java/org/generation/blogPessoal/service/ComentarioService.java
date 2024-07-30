@@ -21,7 +21,9 @@ public class ComentarioService {
 
 	public Optional<List<ComentarioDTO>> getAll() {
 		List<Comentario> comentarios = repository.findAll();
-		return Optional.of(comentarios.stream().map(ComentarioMapper::toDTO).collect(Collectors.toList()));
+		return Optional.of(comentarios.stream()
+			.map(ComentarioMapper::toDTO)
+			.collect(Collectors.toList()));
 	}
 	
 	public Optional<ComentarioDTO> getById(@PathVariable long id) {
@@ -29,15 +31,18 @@ public class ComentarioService {
 		return Optional.of(ComentarioMapper.toDTO(comentario.get()));
 	}
 	
-	public Optional<ComentarioDTO> post(@RequestBody Comentario comentario) {
+	public Optional<ComentarioDTO> post(@RequestBody ComentarioDTO dto) {
+		Comentario comentario = ComentarioMapper.toModel(dto);
 		return Optional.of(ComentarioMapper.toDTO(repository.save(comentario)));
 	}
 	
-	public Optional<ComentarioDTO> put(@RequestBody Comentario comentario) {
+	public Optional<ComentarioDTO> put(@RequestBody ComentarioDTO dto) {
+		Comentario comentario = ComentarioMapper.toModel(dto);
 		return Optional.of(ComentarioMapper.toDTO(repository.save(comentario)));
 	}
 
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
+
 }

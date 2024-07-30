@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.generation.blogPessoal.dto.UsuarioDTO;
-import org.generation.blogPessoal.model.Usuario;
 import org.generation.blogPessoal.model.UsuarioLogin;
 import org.generation.blogPessoal.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,23 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService service;
+
+	@GetMapping
+	public ResponseEntity<List<UsuarioDTO>> getAll() {
+		Optional<List<UsuarioDTO>> usuarios = service.buscarTodosOsUsuarios();
+		return ResponseEntity.ok(usuarios.get());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<UsuarioDTO> getById(@PathVariable long id) {
+		return service.buscarUsuarioPorId(id)
+			.map(response -> ResponseEntity.ok(response))
+			.orElse(ResponseEntity.notFound().build());
+	}
 	
 	@PostMapping("/cadastro")
-	public ResponseEntity<UsuarioDTO> post(@RequestBody Usuario usuario) {
-		Optional<UsuarioDTO> user = service.cadastrarUsuario(usuario);
+	public ResponseEntity<UsuarioDTO> post(@RequestBody UsuarioDTO dto) {
+		Optional<UsuarioDTO> user = service.cadastrarUsuario(dto);
 		try {
 			return ResponseEntity.ok(user.get());
 		} 
@@ -39,32 +51,20 @@ public class UsuarioController {
 		}
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {	
-		return service.autenticarUsuario(usuarioLogin).map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-	}
-	
-	@GetMapping
-	public ResponseEntity<List<UsuarioDTO>> getAll() {
-		Optional<List<UsuarioDTO>> usuarios = service.getAll();
-		return ResponseEntity.ok(usuarios.get());
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<UsuarioDTO> getById(@PathVariable long id) {
-		return service.getById(id)
-				.map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.notFound().build());
-	}
-	
 	@PutMapping
-	public ResponseEntity<Optional<UsuarioDTO>> put(@RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.put(usuario));
+	public ResponseEntity<Optional<UsuarioDTO>> put(@RequestBody UsuarioDTO dto) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.atualizarUsuario(dto));
 	}
 
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable long id) {
-		service.delete(id);
+		service.excluirUsuario(id);
 	}
+
+	@PostMapping("/login")
+	public ResponseEntity<UsuarioLogin> authentication(@RequestBody Optional<UsuarioLogin> usuarioLogin) {
+		return service.autenticarUsuario(usuarioLogin).map(response -> ResponseEntity.ok(response))
+			.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	}
+
 }

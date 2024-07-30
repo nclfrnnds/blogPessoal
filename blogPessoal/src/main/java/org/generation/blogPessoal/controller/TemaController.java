@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.generation.blogPessoal.dto.TemaDTO;
-import org.generation.blogPessoal.model.Tema;
 import org.generation.blogPessoal.service.TemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +27,13 @@ public class TemaController {
 	private TemaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<TemaDTO>> getAll() {
-		Optional<List<TemaDTO>> temas = service.getAll();
-		return ResponseEntity.ok(temas.get());
+	public ResponseEntity<Optional<List<TemaDTO>>> getAll() {
+		return ResponseEntity.ok(service.getAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<TemaDTO> getById(@PathVariable long id) {
-		return service.getById(id)
-				.map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<Optional<TemaDTO>> getById(@PathVariable long id) {
+		return ResponseEntity.ok(service.getById(id));
 	}
 	
 	@GetMapping("/descricao/{descricao}")
@@ -46,17 +42,19 @@ public class TemaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Optional<TemaDTO>> post(@RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(tema));
+	public ResponseEntity<Optional<TemaDTO>> post(@RequestBody TemaDTO dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<TemaDTO>> put(@RequestBody Tema tema) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.put(tema));
+	public ResponseEntity<Optional<TemaDTO>> put(@RequestBody TemaDTO dto) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(dto));
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
+	public ResponseEntity delete(@PathVariable long id) {
 		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
+
 }

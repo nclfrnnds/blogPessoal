@@ -12,4 +12,15 @@ public class ComentarioMapper {
       UsuarioMapper.toDTO(comentario.getUsuario()),
       PublicacaoMapper.toDTO(comentario.getPublicacao()));
   }
+
+  public static Comentario toModel(ComentarioDTO comentarioDTO) {
+    Comentario comentario = new Comentario();
+    comentario.setId(comentarioDTO.getId());
+    comentario.setTexto(comentarioDTO.getTexto());
+    comentario.setData(comentarioDTO.getData());
+    comentario.setUsuario(UsuarioMapper.toModel(comentarioDTO.getUsuario()));
+    comentario.setPublicacao(PublicacaoMapper.toModel(comentarioDTO.getPublicacao()));
+    return comentario;
+  }
+
 }

@@ -3,8 +3,6 @@ package org.generation.blogPessoal.model;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,11 +15,9 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_publicacao")
 public class Publicacao {

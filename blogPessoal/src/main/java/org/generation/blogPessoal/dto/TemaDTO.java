@@ -2,13 +2,13 @@ package org.generation.blogPessoal.dto;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class TemaDTO {
 	
 	private long id;
@@ -21,12 +21,6 @@ public class TemaDTO {
 	public TemaDTO(long id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
-	}
-
-	public TemaDTO(long id, String descricao, List<PublicacaoDTO> publicacoes) {
-		this.id = id;
-		this.descricao = descricao;
-		this.publicacoes = publicacoes;
 	}
 
 }

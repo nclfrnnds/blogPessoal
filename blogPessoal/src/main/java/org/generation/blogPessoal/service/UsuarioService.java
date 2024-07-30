@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -32,8 +31,20 @@ public class UsuarioService {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+
+	public Optional<List<UsuarioDTO>> buscarTodosOsUsuarios() {
+		List<Usuario> usuarios = repository.findAll();
+		return Optional.of(usuarios.stream().map(UsuarioMapper::toDTO).collect(Collectors.toList()));
+	}
+
+	public Optional<UsuarioDTO> buscarUsuarioPorId(@PathVariable long id) {
+		Optional<Usuario> usuario = repository.findById(id);
+		return Optional.of(UsuarioMapper.toDTO(usuario.get()));
+	}
 	
-	public Optional<UsuarioDTO> cadastrarUsuario(Usuario usuario) {
+	public Optional<UsuarioDTO> cadastrarUsuario(UsuarioDTO dto) {
+
+		Usuario usuario = UsuarioMapper.toModel(dto);
 		
 		if (repository.findByNomeDeUsuario(usuario.getNomeDeUsuario()).isPresent() && usuario.getId() == 0) {
 			return Optional.empty();
@@ -43,10 +54,34 @@ public class UsuarioService {
 		
 		return Optional.of(UsuarioMapper.toDTO(repository.save(usuario)));
 	}
+
+	public Optional<UsuarioDTO> atualizarUsuario(UsuarioDTO dto) {
+
+		Usuario usuario = UsuarioMapper.toModel(dto);
+
+		if(repository.findById(usuario.getId()).isPresent()) {
+
+			Optional<Usuario> buscaUsuario = repository.findByNomeDeUsuario(usuario.getNomeDeUsuario());
+
+			if ((buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
+
+			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+
+			return Optional.ofNullable(UsuarioMapper.toDTO(repository.save(usuario)));
+
+		}
+
+		return Optional.empty();
+	}
 	
 	private String criptografarSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
+	}
+
+	public void excluirUsuario(@PathVariable long id) {
+		repository.deleteById(id);
 	}
 	
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
@@ -77,38 +112,5 @@ public class UsuarioService {
 	private String gerarToken(String usuario) {
 		return "Bearer " + jwtService.generateToken(usuario);
 	}
-	
-	public Optional<UsuarioDTO> atualizarUsuario(Usuario usuario) {
-		if(repository.findById(usuario.getId()).isPresent()) {
 
-			Optional<Usuario> buscaUsuario = repository.findByNomeDeUsuario(usuario.getNomeDeUsuario());
-
-			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
-
-			usuario.setSenha(criptografarSenha(usuario.getSenha()));
-
-			return Optional.ofNullable(UsuarioMapper.toDTO(repository.save(usuario)));
-			
-		}
-		return Optional.empty();
-	}
-
-	public Optional<List<UsuarioDTO>> getAll() {
-		List<Usuario> usuarios = repository.findAll();
-		return Optional.of(usuarios.stream().map(UsuarioMapper::toDTO).collect(Collectors.toList()));
-	}
-	
-	public Optional<UsuarioDTO> getById(@PathVariable long id) {
-		Optional<Usuario> usuario = repository.findById(id);
-		return Optional.of(UsuarioMapper.toDTO(usuario.get()));
-	}
-	
-	public Optional<UsuarioDTO> put(@RequestBody Usuario usuario) {
-		return Optional.of(UsuarioMapper.toDTO(repository.save(usuario)));
-	}
-
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
-	}
 }

@@ -9,4 +9,12 @@ public class TemaMapper {
     return new TemaDTO(tema.getId(),
       tema.getDescricao());
   }
+
+  public static Tema toModel(TemaDTO temaDTO) {
+    Tema tema = new Tema();
+    tema.setId(temaDTO.getId());
+    tema.setDescricao(temaDTO.getDescricao());
+    return tema;
+  }
+
 }

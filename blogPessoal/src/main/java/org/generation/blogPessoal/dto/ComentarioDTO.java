@@ -2,13 +2,13 @@ package org.generation.blogPessoal.dto;
 
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class ComentarioDTO {
 	
 	private long id;
@@ -22,17 +22,5 @@ public class ComentarioDTO {
 
 	@JsonIgnoreProperties({ "comentarios", "usuario" })
 	private PublicacaoDTO publicacao;
-
-	public ComentarioDTO(long id,
-						 String texto,
-						 Date data,
-						 UsuarioDTO usuario,
-						 PublicacaoDTO publicacao) {
-		this.id = id;
-		this.texto = texto;
-		this.data = data;
-		this.usuario = usuario;
-		this.publicacao = publicacao;
-	}
 
 }

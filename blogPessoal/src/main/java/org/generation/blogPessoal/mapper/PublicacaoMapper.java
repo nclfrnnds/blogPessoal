@@ -13,4 +13,16 @@ public class PublicacaoMapper {
       TemaMapper.toDTO(publicacao.getTema()),
       UsuarioMapper.toDTO(publicacao.getUsuario()));
   }
+
+  public static Publicacao toModel(PublicacaoDTO publicacaoDTO) {
+    Publicacao publicacao = new Publicacao();
+    publicacao.setId(publicacaoDTO.getId());
+    publicacao.setTitulo(publicacaoDTO.getTitulo());
+    publicacao.setTexto(publicacaoDTO.getTexto());
+    publicacao.setData(publicacaoDTO.getData());
+    publicacao.setTema(TemaMapper.toModel(publicacaoDTO.getTema()));
+    publicacao.setUsuario(UsuarioMapper.toModel(publicacaoDTO.getUsuario()));
+    return publicacao;
+  }
+
 }

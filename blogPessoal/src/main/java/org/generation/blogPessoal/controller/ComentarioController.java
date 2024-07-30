@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.generation.blogPessoal.dto.ComentarioDTO;
-import org.generation.blogPessoal.model.Comentario;
 import org.generation.blogPessoal.service.ComentarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,30 +27,29 @@ public class ComentarioController {
 	private ComentarioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<ComentarioDTO>> getAll() {
-		Optional<List<ComentarioDTO>> comentarios = service.getAll();
-		return ResponseEntity.ok(comentarios.get());
+	public ResponseEntity<Optional<List<ComentarioDTO>>> getAll() {
+		return ResponseEntity.ok(service.getAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ComentarioDTO> getById(@PathVariable long id) {
-		return service.getById(id)
-				.map(response -> ResponseEntity.ok(response))
-				.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<Optional<ComentarioDTO>> getById(@PathVariable long id) {
+		return ResponseEntity.ok(service.getById(id));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Optional<ComentarioDTO>> post(@RequestBody Comentario comentario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(comentario));
+	public ResponseEntity<Optional<ComentarioDTO>> post(@RequestBody ComentarioDTO dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.post(dto));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<ComentarioDTO>> put(@RequestBody Comentario comentario) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.put(comentario));
+	public ResponseEntity<Optional<ComentarioDTO>> put(@RequestBody ComentarioDTO dto) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.put(dto));
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
+	public ResponseEntity delete(@PathVariable long id) {
 		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
+
 }

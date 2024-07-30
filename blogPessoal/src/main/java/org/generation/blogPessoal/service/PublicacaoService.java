@@ -21,7 +21,9 @@ public class PublicacaoService {
 
 	public Optional<List<PublicacaoDTO>> getAll() {
 		List<Publicacao> publicacoes = repository.findAll();
-		return Optional.of(publicacoes.stream().map(PublicacaoMapper::toDTO).collect(Collectors.toList()));
+		return Optional.of(publicacoes.stream()
+			.map(PublicacaoMapper::toDTO)
+			.collect(Collectors.toList()));
 	}
 	
 	public Optional<PublicacaoDTO> getById(@PathVariable long id) {
@@ -34,15 +36,18 @@ public class PublicacaoService {
 		return Optional.of(publicacoes.stream().map(PublicacaoMapper::toDTO).collect(Collectors.toList()));
 	}
 	
-	public Optional<PublicacaoDTO> post(@RequestBody Publicacao publicacao) {
+	public Optional<PublicacaoDTO> post(@RequestBody PublicacaoDTO dto) {
+		Publicacao publicacao = PublicacaoMapper.toModel(dto);
 		return Optional.of(PublicacaoMapper.toDTO(repository.save(publicacao)));
 	}
 	
-	public Optional<PublicacaoDTO> put(@RequestBody Publicacao publicacao) {
+	public Optional<PublicacaoDTO> put(@RequestBody PublicacaoDTO dto) {
+		Publicacao publicacao = PublicacaoMapper.toModel(dto);
 		return Optional.of(PublicacaoMapper.toDTO(repository.save(publicacao)));
 	}
 
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
+
 }

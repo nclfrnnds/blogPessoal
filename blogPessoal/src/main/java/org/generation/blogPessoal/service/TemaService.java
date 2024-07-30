@@ -21,7 +21,9 @@ public class TemaService {
 	
 	public Optional<List<TemaDTO>> getAll() {
 		List<Tema> temas = repository.findAll();
-		return Optional.of(temas.stream().map(TemaMapper::toDTO).collect(Collectors.toList()));
+		return Optional.of(temas.stream()
+			.map(TemaMapper::toDTO)
+			.collect(Collectors.toList()));
 	}
 	
 	public Optional<TemaDTO> getById(@PathVariable long id) {
@@ -34,15 +36,18 @@ public class TemaService {
 		return Optional.of(temas.stream().map(TemaMapper::toDTO).collect(Collectors.toList()));
 	}
 	
-	public Optional<TemaDTO> post(@RequestBody Tema tema) {
+	public Optional<TemaDTO> post(@RequestBody TemaDTO dto) {
+		Tema tema = TemaMapper.toModel(dto);
 		return Optional.of(TemaMapper.toDTO(repository.save(tema)));
 	}
 	
-	public Optional<TemaDTO> put(@RequestBody Tema tema) {
+	public Optional<TemaDTO> put(@RequestBody TemaDTO dto) {
+		Tema tema = TemaMapper.toModel(dto);
 		return Optional.of(TemaMapper.toDTO(repository.save(tema)));
 	}
 
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
+
 }

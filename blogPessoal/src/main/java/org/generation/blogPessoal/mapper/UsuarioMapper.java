@@ -13,4 +13,16 @@ public class UsuarioMapper {
       usuario.getFoto(),
       usuario.getTipo());
   }
+
+  public static Usuario toModel(UsuarioDTO usuarioDTO) {
+    Usuario usuario = new Usuario();
+    usuario.setId(usuarioDTO.getId());
+    usuario.setNome(usuarioDTO.getNome());
+    usuario.setNomeDeUsuario(usuarioDTO.getNomeDeUsuario());
+    usuario.setSenha(usuarioDTO.getSenha());
+    usuario.setFoto(usuarioDTO.getFoto());
+    usuario.setTipo(usuarioDTO.getTipo());
+    return usuario;
+  }
+
 }
